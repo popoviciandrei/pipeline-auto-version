@@ -19,6 +19,11 @@ jobs:
       #       ref: ${{ github.event.pull_request.head.sha }}
       #       fetch-depth: 0
 
+      #   - name: Configure Git
+      #     run: |
+      #       git config --local user.email "action@github.com"
+      #       git config --local user.name "GitHub Action"
+
       - name: Set up GitHub CLI
         run: |
           # Check if GitHub CLI is installed
@@ -30,11 +35,6 @@ jobs:
       - name: Authenticate GitHub CLI
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-
-      - name: Configure Git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
 
       - name: Check for VERSION labels and commit new version
         run: |
