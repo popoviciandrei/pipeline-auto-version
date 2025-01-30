@@ -19,27 +19,27 @@ jobs:
       #       ref: ${{ github.event.pull_request.head.sha }}
       #       fetch-depth: 0
 
-      #   - name: Set up GitHub CLI
-      #     run: |
-      #       # Check if GitHub CLI is installed
-      #       if ! command -v gh &> /dev/null; then
-      #         echo "GitHub CLI could not be found, installing..."
-      #         sudo apt-get install gh -y
-      #       fi
+      - name: Set up GitHub CLI
+        run: |
+          # Check if GitHub CLI is installed
+          if ! command -v gh &> /dev/null; then
+          echo "GitHub CLI could not be found, installing..."
+          sudo apt-get install gh -y
+          fi
 
-      #   - name: Authenticate GitHub CLI
-      #     run: |
-      #       echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
 
-      #   - name: Configure Git
-      #     run: |
-      #       git config --local user.email "action@github.com"
-      #       git config --local user.name "GitHub Action"
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
 
       - name: Check for VERSION labels and commit new version
         run: |
           LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
-            
+              
           echo $LABELS
           # Fetch latest DEV version
           git fetch origin dev:dev
@@ -47,14 +47,15 @@ jobs:
 
           NEW_VERSION=$VERSION
           if [[ "$LABELS" =~ "major" ]]; then
-            NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$1++; $2=0; $3=0; print}')
+              NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$1++; $2=0; $3=0; print}')
           elif [[ "$LABELS" =~ "patch" ]]; then
-            NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$3++; print}')
+              NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$3++; print}')
           else
-            NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2++; $3=0; print}')
+              NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2++; $3=0; print}')
           fi
+          echo $NEW_VERSION
 
-        #   echo $NEW_VERSION > VERSION
-        #   git add VERSION
-        #   git commit -m "Update version to $NEW_VERSION"
-        #   git push origin ${{ github.event.pull_request.head.ref }}
+      #   echo $NEW_VERSION > VERSION
+      #   git add VERSION
+      #   git commit -m "Update version to $NEW_VERSION"
+      #   git push origin ${{ github.event.pull_request.head.ref }}
