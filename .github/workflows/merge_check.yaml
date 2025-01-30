@@ -13,11 +13,10 @@ jobs:
     permissions: write-all
 
     steps:
-      #   - name: Checkout code
-      #     uses: actions/checkout@v2
-      #     with:
-      #       ref: ${{ github.event.pull_request.head.sha }}
-      #       fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: dev
 
       #   - name: Configure Git
       #     run: |
@@ -39,7 +38,7 @@ jobs:
       - name: Check for VERSION labels and commit new version
         run: |
           LABELS=$(gh pr view ${{ github.event.pull_request.number }} --json labels --jq '.labels[].name')
-              
+
           echo $LABELS
           # Fetch latest DEV version
           git fetch origin dev:dev
