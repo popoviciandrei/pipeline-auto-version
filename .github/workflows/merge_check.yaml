@@ -40,7 +40,7 @@ jobs:
           echo $LABELS
           # Fetch latest DEV version
           # git fetch origin dev:dev
-          VERSION=$(git show dev:VERSION)
+          VERSION=$(cat VERSION)
 
           NEW_VERSION=$VERSION
           if [[ "$LABELS" =~ "major" ]]; then
