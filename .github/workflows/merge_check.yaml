@@ -45,7 +45,7 @@ jobs:
           echo "LABELS"
           echo $LABELS
 
-          echo "VERSION"
+          echo "BEFORE VERSION"
           echo $VERSION
 
           NEW_VERSION=$VERSION
@@ -56,7 +56,7 @@ jobs:
           else
               NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2++; $3=0; print}')
           fi
-          echo "NEW_VERSION"
+          echo "NEW VERSION"
           echo $NEW_VERSION
 
           echo $NEW_VERSION > VERSION
