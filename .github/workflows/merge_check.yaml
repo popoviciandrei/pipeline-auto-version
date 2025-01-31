@@ -54,5 +54,5 @@ jobs:
 
           echo $NEW_VERSION > VERSION
           git add VERSION
-          git commit --amend --no-edit
-          git push -f origin dev
+          git commit -m "Update version to $NEW_VERSION"  
+          git push origin dev
