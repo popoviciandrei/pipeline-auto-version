@@ -39,7 +39,7 @@ jobs:
 
           echo $LABELS
           # Fetch latest DEV version
-          git fetch origin dev:dev
+          # git fetch origin dev:dev
           VERSION=$(git show dev:VERSION)
 
           NEW_VERSION=$VERSION
