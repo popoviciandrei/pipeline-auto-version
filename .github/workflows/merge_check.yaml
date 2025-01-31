@@ -40,7 +40,13 @@ jobs:
           echo $LABELS
           # Fetch latest DEV version
           # git fetch origin dev:dev
-          VERSION=$(cat VERSION)
+          VERSION=$(git show dev:VERSION)
+
+          echo "LABELS"
+          echo $LABELS
+
+          echo "VERSION"
+          echo $VERSION
 
           NEW_VERSION=$VERSION
           if [[ "$LABELS" =~ "major" ]]; then
@@ -50,6 +56,7 @@ jobs:
           else
               NEW_VERSION=$(echo $VERSION | awk -F. -v OFS=. '{$2++; $3=0; print}')
           fi
+          echo "NEW_VERSION"
           echo $NEW_VERSION
 
           echo $NEW_VERSION > VERSION
